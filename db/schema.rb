@@ -10,39 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_10_043223) do
+ActiveRecord::Schema.define(version: 2020_08_10_092324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "clients", force: :cascade do |t|
-    t.string "name"
-    t.string "last_name"
-    t.string "address"
-    t.string "email"
-    t.string "username"
-    t.string "password"
-    t.string "phone"
+    t.string "name", null: false
+    t.string "last_name", null: false
+    t.string "address", null: false
+    t.string "email", null: false
+    t.string "username", null: false
+    t.string "password", null: false
+    t.string "phone", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "currencies", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "product_stocks", force: :cascade do |t|
-    t.integer "quantity"
+    t.integer "quantity", null: false
     t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 2020_08_10_043223) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "code"
-    t.string "name"
+    t.string "code", null: false
+    t.string "name", null: false
     t.string "description"
-    t.decimal "price"
+    t.decimal "price", null: false
     t.string "image"
-    t.boolean "is_enabled"
-    t.bigint "currency_id"
+    t.boolean "is_enabled", default: true
+    t.bigint "currency_id", null: false
     t.bigint "category_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -64,14 +64,14 @@ ActiveRecord::Schema.define(version: 2020_08_10_043223) do
   end
 
   create_table "stock_movement_types", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "stock_movements", force: :cascade do |t|
-    t.bigint "stock_movement_type_id"
-    t.bigint "client_id"
+    t.bigint "stock_movement_type_id", null: false
+    t.bigint "client_id", null: false
     t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
