@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-[StockMovement,ProductStock,StockMovementType,Product,Category,Currency,Client].each(&:delete_all) # Ensure the DB is cleaned each run
+[PaymentIntent,PaymentStatus,StockMovement,ProductStock,StockMovementType,Product,Category,Currency,Client].each(&:delete_all) # Ensure the DB is cleaned each run
 
 ActiveRecord::Base.connection.tables.each do |t|
   ActiveRecord::Base.connection.reset_pk_sequence!(t)
@@ -48,3 +48,16 @@ end
 
 StockMovementType.create! name: 'add'
 StockMovementType.create! name: 'subtract'
+
+PaymentStatus.create! name: 'intent'
+PaymentStatus.create! name: 'completed'
+PaymentStatus.create! name: 'cancelled'
+
+2.times do    
+    PaymentIntent.create! client_secret: Faker::Crypto.sha256,
+    amount: Faker::Commerce.price,
+    payment_method_type: 'automatic',    
+    client_id: rand(1..10),
+    currency_id: rand(1..10),
+    payment_status_id:rand(1..3)
+end

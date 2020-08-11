@@ -7,5 +7,6 @@ class ProductResource < ApplicationResource
   attribute :is_enabled, :boolean
   attribute :currency_id, :integer
   belongs_to :category
+  belongs_to :currency
   has_one :product_stock
 end

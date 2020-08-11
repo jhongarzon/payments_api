@@ -6,4 +6,6 @@ class ClientResource < ApplicationResource
   attribute :username, :string
   attribute :password, :string
   attribute :phone, :string
+   has_many :payment_intent
+    has_many :payment
 end

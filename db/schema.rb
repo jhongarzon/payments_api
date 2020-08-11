@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_045823) do
+ActiveRecord::Schema.define(version: 2020_08_11_203919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,45 @@ ActiveRecord::Schema.define(version: 2020_08_11_045823) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "payment_intents", force: :cascade do |t|
+    t.string "client_secret", null: false
+    t.decimal "amount", null: false
+    t.string "payment_method_type"
+    t.string "receipt_email"
+    t.bigint "client_id", null: false
+    t.bigint "currency_id", null: false
+    t.bigint "payment_status_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_payment_intents_on_client_id"
+    t.index ["currency_id"], name: "index_payment_intents_on_currency_id"
+    t.index ["payment_status_id"], name: "index_payment_intents_on_payment_status_id"
+  end
+
+  create_table "payment_statuses", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "client_secret", null: false
+    t.decimal "amount", null: false
+    t.string "receipt_email", null: false
+    t.datetime "cancelled_at"
+    t.string "cancellation_reason"
+    t.bigint "payment_intent_id", null: false
+    t.bigint "client_id", null: false
+    t.bigint "currency_id", null: false
+    t.bigint "payment_status_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_payments_on_client_id"
+    t.index ["currency_id"], name: "index_payments_on_currency_id"
+    t.index ["payment_intent_id"], name: "index_payments_on_payment_intent_id"
+    t.index ["payment_status_id"], name: "index_payments_on_payment_status_id"
   end
 
   create_table "product_stocks", force: :cascade do |t|
@@ -78,6 +117,13 @@ ActiveRecord::Schema.define(version: 2020_08_11_045823) do
     t.index ["product_id"], name: "index_stock_movements_on_product_id"
   end
 
+  add_foreign_key "payment_intents", "clients"
+  add_foreign_key "payment_intents", "currencies"
+  add_foreign_key "payment_intents", "payment_statuses"
+  add_foreign_key "payments", "clients"
+  add_foreign_key "payments", "currencies"
+  add_foreign_key "payments", "payment_intents"
+  add_foreign_key "payments", "payment_statuses"
   add_foreign_key "product_stocks", "products"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "currencies"
