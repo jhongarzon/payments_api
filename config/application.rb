@@ -34,7 +34,7 @@ module PaymentsApi
     end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-
+    config.autoload_paths << Rails.root.join('lib')
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -44,5 +44,14 @@ module PaymentsApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :put]
+        resource '/embed.js', headers: :any, methods: :get
+        resource '/en/embed/1', headers: :any, methods: :get
+      end
+    end
   end
 end

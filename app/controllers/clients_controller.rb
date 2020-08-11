@@ -9,6 +9,10 @@ class ClientsController < ApplicationController
     respond_with(client)
   end
 
+  def currentClient
+      render json: {user: current_client}
+  end
+
   def create
     client = ClientResource.build(params)
 
