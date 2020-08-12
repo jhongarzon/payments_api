@@ -13,16 +13,17 @@ class PaymentsController < ApplicationController
 
   def getStripeKey
     render json: {public_key: Rails.application.credentials.stripe_public_key} 
+    # stripe_secret_key
   end
 
   def create
     payment = PaymentResource.build(params)
-
-    if payment.save
-      render jsonapi: payment, status: 201
-    else
-      render jsonapi_errors: payment
-    end
+    # render json{ test: "jhoncito" }
+    # if payment.save
+    #   render jsonapi: payment, status: 201
+    # else
+    #   render jsonapi_errors: payment
+    # end
   end
 
   def update

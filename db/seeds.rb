@@ -11,6 +11,8 @@
 ActiveRecord::Base.connection.tables.each do |t|
   ActiveRecord::Base.connection.reset_pk_sequence!(t)
 end
+Currency.create! name: 'USD', description: 'US Dollars'
+Currency.create! name: 'EUR', description: 'EURO'
 
 10.times do
 currency = Currency.create! name: Faker::Currency.code, 
@@ -21,16 +23,16 @@ end
     
     category = Category.create! name: Faker::Commerce.department    
 
-    (1..2).each do |i|
-        product = category.products.create! code: Faker::Code.ean,
-            name: Faker::Commerce.product_name,
-            price: Faker::Commerce.price,
-            image: '/test.png',
-            is_enabled: Faker::Boolean.boolean(true_ratio: 0.2),
-            currency_id: rand(1..10)
+    
+    product = category.products.create! code: Faker::Code.ean,
+        name: Faker::Commerce.product_name,
+        price: rand(100..10000),
+        image: "#{category.id}.png",
+        is_enabled: Faker::Boolean.boolean(true_ratio: 0.2),
+        currency_id: rand(1..2)
 
-            ProductStock.create! quantity: rand(20..80), product_id: product.id
-    end
+        ProductStock.create! quantity: rand(20..80), product_id: product.id
+    
 end
 
 10.times do

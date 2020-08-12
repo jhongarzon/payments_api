@@ -50,6 +50,8 @@ gem 'graphiti-rails'
 gem 'vandal_ui'
 gem 'kaminari', '~> 1.1'
 gem 'responders', '~> 3.0'
+gem 'stripe'
+gem 'stripe-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.0beta2'
   gem 'factory_bot_rails', '~> 5.0'
