@@ -27,7 +27,8 @@ end
     product = category.products.create! code: Faker::Code.ean,
         name: Faker::Commerce.product_name,
         price: rand(100..10000),
-        image: "#{category.id}.png",
+        image: "#{category.id}.jpg",
+        description: 'Product description',
         is_enabled: Faker::Boolean.boolean(true_ratio: 0.2),
         currency_id: rand(1..2)
 
