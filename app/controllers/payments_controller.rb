@@ -17,13 +17,41 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    payment = PaymentResource.build(params)
-    # render json{ test: "jhoncito" }
-    # if payment.save
-    #   render jsonapi: payment, status: 201
-    # else
-    #   render jsonapi_errors: payment
-    # end
+    paymentIntent = PaymentIntent.find(params[:payment_intent_id])    
+
+    cancelled_at = nil
+    cancellation_reason = ''
+    payment_status_id = 2
+
+    if params[:status] != 'succeeded'
+      cancelled_at = DateTime.now()
+      cancellation_reason = status
+      payment_status_id = 3
+    end
+    
+   
+
+    payment = Payment.create! payment_intent_id: params[:payment_intent_id],
+    client_secret: paymentIntent[:client_secret],
+    amount: paymentIntent[:amount],
+    client_id: paymentIntent[:client_id],
+    receipt_email: paymentIntent[:receipt_email],
+    currency_id: paymentIntent[:currency_id],
+    payment_status_id: payment_status_id,
+    cancelled_at: cancelled_at,
+    cancellation_reason: cancellation_reason
+
+    
+    if payment.id 
+      
+      StockMovement.create!  client_id: paymentIntent[:client_id], 
+      product_id: params[:product_id],
+      stock_movement_type_id: 2
+       
+      render json: { success: true}
+    else
+      render json: { success: false}
+    end
   end
 
   def update
