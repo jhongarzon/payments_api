@@ -19,10 +19,12 @@ This is a ruby on rails api. It includes Graphiti which handles the requests fro
 
 * Database creation
 
+<!-- FEEDBACK: should be `rake db:migrate` -->
     run rails db:migrate inside the root folder. This command will create the database structure in your local environment. Check if the database is created properly before continue to the next step.
 
 * Database initialization
 
+<!-- FEEDBACK: should be `rake db:seed` -->
     run rails db:seed this command will populate the database with dummy data.
 
     the clients table contains the users that are allowed to login to the react frontend application the password is the same for all "1234567". So check any username and use the default password to authenticate.

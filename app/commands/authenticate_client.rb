@@ -1,4 +1,5 @@
 class AuthenticateClient
+  # Good gem, new to me. But we use service object pattern a lot
   prepend SimpleCommand
 
   def initialize(username, password)
@@ -12,6 +13,7 @@ class AuthenticateClient
 
   private
 
+  # FEEDBACK: good pattern making the accessors private
   attr_accessor :username, :password
 
   def client
