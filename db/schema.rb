@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_08_11_203919) do
 
   create_table "payment_intents", force: :cascade do |t|
     t.string "client_secret", null: false
+    # FEEDBACK: is better to use cents so there's no floating point rounding error. Stripe and a lot of services use cents also, so there is less need to translate
     t.decimal "amount", null: false
     t.string "payment_method_type"
     t.string "receipt_email"
@@ -64,6 +65,7 @@ ActiveRecord::Schema.define(version: 2020_08_11_203919) do
 
   create_table "payments", force: :cascade do |t|
     t.string "client_secret", null: false
+    # FEEDBACK: is better to use cents so there's no floating point rounding error. Stripe and a lot of services use cents also, so there is less need to translate
     t.decimal "amount", null: false
     t.string "receipt_email", null: false
     t.datetime "cancelled_at"

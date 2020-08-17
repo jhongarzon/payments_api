@@ -9,9 +9,11 @@ class PaymentIntentsController < ApplicationController
     respond_with(payment_intent)
   end
 
+  # FEEDBACK: this is a lot of logic for a controller. Perhaps a service would help here?
   def create
     
     
+    # FEEDBACK: i think this could be done as a before action on a lot of endpoints 
     decoded_auth_header = JsonWebToken.decode(request.headers["Authorization"])
     client_id = decoded_auth_header[:client_id]
     client = Client.find(client_id)

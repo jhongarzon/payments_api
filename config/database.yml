@@ -8,8 +8,9 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: localhost
-  username: postgres
-  password: camila08
+  # FEEDBACK: shouldn't check in credentials to git even if local
+  # username: postgres
+  # password: camila08
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
